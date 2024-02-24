@@ -9,6 +9,9 @@ import { formLog } from "@/models/forms";
 import bcrypt from "bcrypt";
 
 export const options: NextAuthOptions = {
+  pages: {
+    signIn: "/auth/login",
+  },
   session: {
     strategy: "jwt",
   },

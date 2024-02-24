@@ -1,7 +1,3 @@
-import { options } from "@/app/api/auth/[...nextauth]/options";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-
 async function User({ params }: { params: { email: string } }) {
   // here u send the params.email + new password
   return (
