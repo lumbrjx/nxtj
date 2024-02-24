@@ -23,30 +23,38 @@ export async function createUser(user: RegisterSchema) {
     return { error: error, ok: false };
   }
 }
-// Get a user from DB
-// export async function getUser(email: string, includeId: boolean) {
-//   try {
-//     const user = await db.query.user.findFirst({
-//       where: (user, { eq }) => eq(user.email, email),
-//       columns: {
-//         id: includeId,
-//         username: true,
-//         password: true,
-//         oauthToken: true,
-//         email: true,
-//         type: true,
-//         TWO_FA: true,
-//         twoFaEmail: true,
-//       },
-//     });
-//     if (!user) {
-//       return parseToResult(undefined, "user doesn't exist");
-//     }
-//     return parseToResult(await user);
-//   } catch (error) {
-//     return parseToResult(undefined, error as Error);
-//   }
-// }
+// Get a user account from DB
+export async function getUserAccount(email: string) {
+  try {
+    const user = await db.query.cred_account.findFirst({
+      where: (user, { eq }) => eq(user.email, email),
+      columns: {
+        password: true,
+        email: true,
+      },
+    });
+    if (!user) return { error: "no user", ok: false };
+
+    return { error: null, ok: true, data: user };
+  } catch (error) {
+    return { error: error, ok: false };
+  }
+}
+
+// Get a user data from DB
+export async function getUserData(email: string) {
+  try {
+    const user = await db.query.users.findFirst({
+      where: (user, { eq }) => eq(user.email, email),
+    });
+    if (!user) return { error: "no user", ok: false };
+
+    return { error: null, ok: true, data: user };
+  } catch (error) {
+    return { error: error, ok: false };
+  }
+}
+
 // // Edit user's password
 // export async function editPassword(password: string, email: string) {
 //   try {

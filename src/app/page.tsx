@@ -1,9 +1,16 @@
 "use client";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+
 export default function Navbar() {
-  const { data: session } = useSession();
-  console.log(session);
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/api/auth/signin?callbackUrl=/");
+    },
+  });
+  console.log("session", session);
   return (
     <>
       <nav className="bg-blue-800 p-4">

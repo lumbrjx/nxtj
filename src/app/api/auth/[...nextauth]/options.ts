@@ -1,13 +1,17 @@
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/config/drizzle-client";
-import type { Adapter } from "next-auth/adapters";
+import { Adapter } from "next-auth/adapters";
+import { getUserAccount, getUserData } from "@/server/services/auth";
+import { formLog } from "@/models/forms";
 
 export const options: NextAuthOptions = {
+  session: {
+    strategy: "jwt",
+  },
   adapter: DrizzleAdapter(db) as Adapter,
-
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -16,23 +20,19 @@ export const options: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: {},
+        email: {},
         password: {},
       },
       async authorize(credentials) {
-        // This is where you need to retrieve user data
-        // to verify with credentials
-        // Docs: https://next-auth.js.org/configuration/providers/credentials
-        const user = { id: "42", name: "Dave", password: "nextauth" };
+        const parsed = formLog.parse(credentials);
 
-        if (
-          credentials?.username === user.name &&
-          credentials?.password === user.password
-        ) {
-          return user;
-        } else {
-          return null;
-        }
+        const user = await getUserAccount(parsed.email);
+        if (!user) return null;
+        if (user.data?.password !== parsed.password) return null;
+
+        const userdata = await getUserData(user.data.email);
+        if (!userdata.ok) return null;
+        return userdata.data as User;
       },
     }),
   ],
