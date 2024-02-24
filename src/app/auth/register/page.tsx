@@ -1,8 +1,12 @@
 "use client";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 export default function Navbar() {
   const { data: session } = useSession();
+  if (session) {
+    redirect("/");
+  }
   console.log(session);
   return (
     <>
@@ -19,7 +23,6 @@ export default function Navbar() {
           </li>
         </ul>
       </nav>
-      <p className="text-white">{session?.user?.name}</p>
     </>
   );
 }

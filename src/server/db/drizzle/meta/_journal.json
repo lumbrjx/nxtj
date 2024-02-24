@@ -8,6 +8,34 @@
       "when": 1708723699821,
       "tag": "0000_calm_steve_rogers",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1708768944167,
+      "tag": "0001_grey_ben_grimm",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1708775768753,
+      "tag": "0002_solid_hex",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1708776899851,
+      "tag": "0003_perpetual_thunderbolt",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1708777136951,
+      "tag": "0004_salty_tempest",
+      "breakpoints": true
     }
   ]
 }

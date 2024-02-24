@@ -6,13 +6,15 @@ import {
   integer,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
+import { createId } from "@paralleldrive/cuid2";
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
-  name: text("name"),
-  email: text("email").notNull(),
+  name: text("name").unique(),
+  email: text("email").notNull().unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  // here goes other user data
 });
 
 export const accounts = pgTable(
@@ -38,6 +40,15 @@ export const accounts = pgTable(
     }),
   }),
 );
+
+export const cred_account = pgTable("cred_account", {
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .$defaultFn(() => createId()),
+  email: text("email").notNull().unique(),
+  password: text("password").notNull(),
+});
 
 export const sessions = pgTable("session", {
   sessionToken: text("sessionToken").notNull().primaryKey(),

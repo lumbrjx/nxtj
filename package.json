@@ -13,10 +13,12 @@
 	"dependencies": {
 		"@auth/core": "^0.27.0",
 		"@auth/drizzle-adapter": "^0.7.0",
+		"@paralleldrive/cuid2": "^2.2.2",
 		"@types/pg": "^8.11.0",
 		"dotenv": "^16.4.5",
 		"drizzle-kit": "^0.20.14",
 		"drizzle-orm": "^0.29.4",
+		"jsonwebtoken": "^9.0.2",
 		"next": "14.1.0",
 		"next-auth": "^4.24.6",
 		"pg": "^8.11.3",
