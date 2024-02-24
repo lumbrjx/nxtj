@@ -9,6 +9,14 @@ export type LoginSchema = {
   password: string;
 };
 
+export type ResetSchema = {
+  email: string;
+};
+
+export type ResetAfterSchema = {
+  email: string;
+  password: string;
+};
 export const formReg: ZodType<RegisterSchema> = z.object({
   username: z
     .string()
@@ -20,4 +28,11 @@ export const formReg: ZodType<RegisterSchema> = z.object({
 export const formLog: ZodType<LoginSchema> = z.object({
   email: z.string().email().min(1),
   password: z.string().min(6, "password must contain at least 6 characters"),
+});
+export const formRes: ZodType<ResetSchema> = z.object({
+  email: z.string().email().min(1),
+});
+export const formResAfter: ZodType<ResetAfterSchema> = z.object({
+  email: z.string().min(1),
+  password: z.string().min(1),
 });

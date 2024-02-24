@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { options } from "../../auth/[...nextauth]/options";
 import { formReg } from "@/models/forms";
-import { createUser } from "@/server/services/auth";
+import { hashAndCreateUser } from "@/lib/helpers/hashAndCreate";
 export async function POST(req: NextRequest) {
   const session = await getServerSession(options);
   if (session) {
@@ -12,11 +12,8 @@ export async function POST(req: NextRequest) {
   try {
     const { email, username, password } = await req.json();
     const parsed = formReg.parse({ email, username, password });
-    const user = await createUser(parsed);
-
-    if (!user.ok)
-      return NextResponse.json({ error: user.error.detail }, { status: 500 });
-    return NextResponse.json(user);
+    await hashAndCreateUser(parsed);
+    return NextResponse.json({ ok: true, error: null }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 400 });
   }

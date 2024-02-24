@@ -6,6 +6,7 @@ import { db } from "@/config/drizzle-client";
 import { Adapter } from "next-auth/adapters";
 import { getUserAccount, getUserData } from "@/server/services/auth";
 import { formLog } from "@/models/forms";
+import bcrypt from "bcrypt";
 
 export const options: NextAuthOptions = {
   session: {
@@ -28,9 +29,13 @@ export const options: NextAuthOptions = {
 
         const user = await getUserAccount(parsed.email);
         if (!user) return null;
-        if (user.data?.password !== parsed.password) return null;
 
-        const userdata = await getUserData(user.data.email);
+        const match = await bcrypt.compare(
+          parsed.password,
+          user.data?.password as string,
+        );
+        if (match === false) return null;
+        const userdata = await getUserData(user.data?.email as string);
         if (!userdata.ok) return null;
         return userdata.data as User;
       },

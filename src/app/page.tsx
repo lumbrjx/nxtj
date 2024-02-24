@@ -10,7 +10,6 @@ export default function Navbar() {
       redirect("/api/auth/signin?callbackUrl=/");
     },
   });
-  console.log("session", session);
   return (
     <>
       <nav className="bg-blue-800 p-4">

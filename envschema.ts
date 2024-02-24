@@ -4,16 +4,14 @@ const envSchema = z.object({
   POSTGRES_PASSWORD: z.string().min(1),
   POSTGRES_USER: z.string().min(1),
   POSTGRES_DB: z.string().min(1),
-
   PG_DATABASE: z.string().min(1),
   SCHEMA_PATH: z.string().min(1),
   OUT_PATH: z.string().min(1),
-
   NEXTAUTH_URL: z.string().min(1),
   NEXTAUTH_SECRET: z.string().min(1),
-
   GOOGLE_CLIENT_ID: z.string().min(1),
   GOOGLE_CLIENT_SECRET: z.string().min(1),
+  RESET_TOKEN_SECRET: z.string().min(1),
 });
 
 const envServer = envSchema.safeParse({
@@ -27,6 +25,7 @@ const envServer = envSchema.safeParse({
   NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  RESET_TOKEN_SECRET: process.env.RESET_TOKEN_SECRET,
 });
 
 if (!envServer.success) {

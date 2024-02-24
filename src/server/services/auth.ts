@@ -56,40 +56,14 @@ export async function getUserData(email: string) {
 }
 
 // // Edit user's password
-// export async function editPassword(password: string, email: string) {
-//   try {
-//     const user = await db
-//       .update(schema.user)
-//       .set({ password: password })
-//       .where(eq(schema.user.email, email))
-//       .returning({ userEmail: schema.user.email });
-//     return parseToResult(user[0].userEmail);
-//   } catch (error) {
-//     return parseToResult(undefined, "user doesn't exist");
-//   }
-// }
-// // Edit 2FA state
-// export async function edit2fa(
-//   email: string,
-//   tfaemail: string | null,
-//   type: boolean,
-// ) {
-//   try {
-//     const user = await db
-//       .update(schema.user)
-//       .set({ twoFaEmail: tfaemail, TWO_FA: type })
-//       .where(eq(schema.user.email, email))
-//       .returning({
-//         usertfaEmail: schema.user.twoFaEmail,
-//         tfa: schema.user.TWO_FA,
-//       });
-//     if (!user[0]) {
-//       return parseToResult(undefined, "user doesn't exist");
-//     }
-//
-//     return parseToResult(user[0]);
-//   } catch (error) {
-//     return parseToResult(undefined, error as Error);
-//   }
-// }
-//
+export async function editPassword(password: string, email: string) {
+  try {
+    await db
+      .update(schema.cred_account)
+      .set({ password: password })
+      .where(eq(schema.cred_account.email, email));
+    return { ok: true, error: null };
+  } catch (error) {
+    return { ok: false, error: error };
+  }
+}

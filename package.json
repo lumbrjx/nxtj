@@ -15,6 +15,7 @@
 		"@auth/drizzle-adapter": "^0.7.0",
 		"@paralleldrive/cuid2": "^2.2.2",
 		"@types/pg": "^8.11.0",
+		"bcrypt": "^5.1.1",
 		"dotenv": "^16.4.5",
 		"drizzle-kit": "^0.20.14",
 		"drizzle-orm": "^0.29.4",
@@ -27,6 +28,8 @@
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {
+		"@types/bcrypt": "^5.0.2",
+		"@types/jsonwebtoken": "^9.0.5",
 		"@types/node": "^20",
 		"@types/react": "^18",
 		"@types/react-dom": "^18",
